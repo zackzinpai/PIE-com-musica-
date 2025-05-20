@@ -1,0 +1,234 @@
+body {
+    font-family: 'Press Start 2P', cursive;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    color: #333;
+    animation: fadeInBackground 2s ease forwards;
+    position: relative; /* Adicionado para posicionar o overlay */
+    overflow-x: hidden; /* Evita barra de rolagem horizontal se a imagem for grande */
+}
+
+@keyframes fadeInBackground {
+    from {
+        background-color: rgba(240, 240, 240, 0);
+    }
+    to {
+        background-color: #f0f0f0;
+    }
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('images/fundo.jpg'); /* Caminho para sua imagem de fundo */
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3; /* Ajuste a opacidade conforme necessário */
+    z-index: -1; /* Coloca a imagem atrás do conteúdo */
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #4CAF50;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease forwards, pulse 2s infinite alternate;
+    opacity: 0;
+}
+
+@media (min-width: 640px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.06);
+    }
+}
+
+.name-label {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: #555;
+    opacity: 0.8;
+    animation: slideIn 1s ease-in-out forwards;
+    opacity: 0;
+}
+
+.board {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(100px, 1fr)); /* 6 colunas */
+    grid-template-rows: repeat(3, auto); /* 3 fileiras */
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    perspective: 1000px;
+    animation: slideIn 1s ease-in-out forwards;
+    opacity: 0;
+    align-items: stretch;
+    width: 90vw;
+    max-width: 1000px; /* Ajustado para 6 cartas */
+}
+
+@media (max-width: 1000px) {
+    .board {
+        grid-template-columns: repeat(3, minmax(100px, 1fr)); /* 3 colunas em telas médias */
+        grid-template-rows: repeat(6, auto); /* 6 fileiras */
+    }
+}
+
+@media (max-width: 640px) {
+    .board {
+        grid-template-columns: repeat(2, minmax(80px, 1fr)); /* 2 colunas em telas pequenas */
+        grid-template-rows: repeat(9, auto); /* Ajuste para 18 cartas */
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.card {
+    aspect-ratio: 2 / 3;
+    min-width: 100px;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    border-radius: 0.5rem;
+    border: 2px solid #ccc;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.card-face:hover {
+    border-color: #4CAF50;
+}
+
+.card-front {
+    background-color: #f5f5f5;
+    color: #333;
+    transform: rotateY(180deg);
+}
+
+.card-back {
+    background-color: #4CAF50;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-back img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.reset-button {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.8rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    font-family: 'Press Start 2P', cursive;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.reset-button:hover {
+    background-color: #45a049;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    transform: scale(1.04);
+}
+
+.reset-button:active {
+    transform: scale(1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 640px) {
+    .reset-button {
+        font-size: 1rem;
+        padding: 1rem 2rem;
+    }
+}
+
+#result {
+    font-size: 0.8rem;
+    color: #333;
+    margin-bottom: 1rem;
+    animation: fadeIn 1s ease forwards, slideInUp 1s ease-in-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@media (min-width: 640px) {
+    #result {
+        font-size: 1.2rem;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
